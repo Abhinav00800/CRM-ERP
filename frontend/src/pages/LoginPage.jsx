@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
 
 const validUsers = [
   { role: "project-manager", username: "pm", password: "123" },
@@ -94,17 +96,17 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* New user sign-up */}
-        <div className="mt-6 text-center text-sm">
-          <span className="text-gray-600">New user?</span>{" "}
-          <button
-            type="button"
-            className="text-blue-500 hover:underline"
-            onClick={() => alert("Redirect to sign-up page")}
-          >
-            Sign up
-          </button>
-        </div>
+      {/* New user sign-up */}
+<div className="mt-6 text-center text-sm">
+  <span className="text-gray-600">New user?</span>{" "}
+  <Link
+    to="/signup"
+    className="text-blue-500 hover:underline"
+  >
+    Sign up
+  </Link>
+</div>
+
       </div>
     </div>
   );
