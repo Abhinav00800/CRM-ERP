@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import ProjectManagement from './pages/ProjectManagement';
 
 // Temporary placeholder components for role dashboards
 const ProjectManager = () => <h1>Project Manager Dashboard</h1>;
@@ -30,6 +31,8 @@ function App() {
         <Route path='/client' element={<Client />} />
         <Route path='/sales' element={<Sales />} />
         <Route path='/finance' element={<Finance />} />
+        <Route path='/projectmanagment' element={<ProjectManagement/>} />
+        <Route path='/projectmanagement/:id' element={<ProjectManagement />} />
       </Routes>
     </BrowserRouter>
   );
