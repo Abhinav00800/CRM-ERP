@@ -2,9 +2,9 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
-import SignupPage from './components/SignupPage'; // ✅ Cleaned line
+import SignupPage from './components/SignupPage'; // Cleaned line
 
-// ✅ Actual components
+// Actual components
 import ClientDashboard from './pages/client-dashboard/ClientDashboard';
 import ClientForm from './pages/ClientForm';
 
