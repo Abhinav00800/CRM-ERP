@@ -2,12 +2,16 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './components/SignupPage';
 
-// Temporary placeholder components for role dashboards
+// ✅ Actual components
+import ClientDashboard from './pages/client-dashboard/ClientDashboard';
+import ClientForm from './pages/ClientForm';
+
+// Temporary placeholder components for other dashboards
 const ProjectManager = () => <h1>Project Manager Dashboard</h1>;
 const HR = () => <h1>HR Dashboard</h1>;
 const Admin = () => <h1>Admin Dashboard</h1>;
-const Client = () => <h1>Client Dashboard</h1>;
 const Sales = () => <h1>Sales Dashboard</h1>;
 const Finance = () => <h1>Finance Dashboard</h1>;
 
@@ -18,16 +22,20 @@ function App() {
         {/* Landing page */}
         <Route path='/' element={<LandingPage />} />
 
-        {/* Login route */}
+        {/* Login & Signup routes */}
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/signup' element={<SignupPage />} />
 
         {/* Role-based dashboards */}
         <Route path='/project-manager' element={<ProjectManager />} />
         <Route path='/hr' element={<HR />} />
         <Route path='/admin' element={<Admin />} />
-        <Route path='/client' element={<Client />} />
+        <Route path='/client' element={<ClientDashboard />} />  {/* ✅ Real dashboard */}
         <Route path='/sales' element={<Sales />} />
         <Route path='/finance' element={<Finance />} />
+
+        {/* Client form route */}
+        <Route path='/client-form' element={<ClientForm />} /> {/* ✅ Form route */}
       </Routes>
     </BrowserRouter>
   );
