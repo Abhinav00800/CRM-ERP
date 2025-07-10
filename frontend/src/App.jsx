@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
-import SignupPage from './components/SignupPage';
+import SignupPage from './components/SignupPage'; // ✅ Cleaned line
 
 // ✅ Actual components
 import ClientDashboard from './pages/client-dashboard/ClientDashboard';
@@ -30,12 +30,12 @@ function App() {
         <Route path='/project-manager' element={<ProjectManager />} />
         <Route path='/hr' element={<HR />} />
         <Route path='/admin' element={<Admin />} />
-        <Route path='/client' element={<ClientDashboard />} />  {/* ✅ Real dashboard */}
+        <Route path='/client' element={<ClientDashboard />} />
         <Route path='/sales' element={<Sales />} />
         <Route path='/finance' element={<Finance />} />
 
         {/* Client form route */}
-        <Route path='/client-form' element={<ClientForm />} /> {/* ✅ Form route */}
+        <Route path='/client-form' element={<ClientForm />} />
       </Routes>
     </BrowserRouter>
   );
