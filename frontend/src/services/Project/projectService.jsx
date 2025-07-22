@@ -1,15 +1,34 @@
 import axios from 'axios';
-import { getAuthHeader } from './authService';
+import { getCurrentUser } from './authService';
 
-const API_URL = import.meta.env.VITE_API_URL + '/auth';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
+// Create axios instance
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-export const fetchProjects = async () => {
+// Add request interceptor to include token
+api.interceptors.request.use(
+  (config) => {
+    const user = getCurrentUser();
+    if (user && user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export const fetchProjects = async (params = {}) => {
   try {
-    const response = await axios.get(API_URL, {
-      headers: getAuthHeader()
-    });
-    return response.data.projects;
+    const response = await api.get('/projects', { params });
+    return response.data.data.projects;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch projects');
   }
@@ -17,10 +36,8 @@ export const fetchProjects = async () => {
 
 export const getProjectById = async (projectId) => {
   try {
-    const response = await axios.get(`${API_URL}/${projectId}`, {
-      headers: getAuthHeader()
-    });
-    return response.data;
+    const response = await api.get(`/projects/${projectId}`);
+    return response.data.data.project;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch project');
   }
@@ -28,10 +45,8 @@ export const getProjectById = async (projectId) => {
 
 export const createProject = async (projectData) => {
   try {
-    const response = await axios.post(API_URL, projectData, {
-      headers: getAuthHeader()
-    });
-    return response.data;
+    const response = await api.post('/projects', projectData);
+    return response.data.data.project;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to create project');
   }
@@ -39,10 +54,8 @@ export const createProject = async (projectData) => {
 
 export const updateProject = async (projectId, projectData) => {
   try {
-    const response = await axios.put(`${API_URL}/${projectId}`, projectData, {
-      headers: getAuthHeader()
-    });
-    return response.data;
+    const response = await api.put(`/projects/${projectId}`, projectData);
+    return response.data.data.project;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to update project');
   }
@@ -50,22 +63,28 @@ export const updateProject = async (projectId, projectData) => {
 
 export const deleteProject = async (projectId) => {
   try {
-    await axios.delete(`${API_URL}/${projectId}`, {
-      headers: getAuthHeader()
-    });
+    await api.delete(`/projects/${projectId}`);
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to delete project');
   }
 };
 
+export const addTimeEntry = async (projectId, timeData) => {
+  try {
+    const response = await api.post(`/projects/${projectId}/time`, timeData);
+    return response.data.data.timeEntry;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Failed to add time entry');
+  }
+};
+
 export const uploadDocument = async (projectId, formData) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/${projectId}/documents`,
+    const response = await api.post(
+      `/projects/${projectId}/documents`,
       formData,
       {
         headers: {
-          ...getAuthHeader(),
           'Content-Type': 'multipart/form-data'
         }
       }
@@ -78,12 +97,9 @@ export const uploadDocument = async (projectId, formData) => {
 
 export const addProjectMilestone = async (projectId, milestoneData) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/${projectId}/milestones`,
-      milestoneData,
-      {
-        headers: getAuthHeader()
-      }
+    const response = await api.post(
+      `/projects/${projectId}/milestones`,
+      milestoneData
     );
     return response.data;
   } catch (error) {
@@ -93,32 +109,12 @@ export const addProjectMilestone = async (projectId, milestoneData) => {
 
 export const updateProjectMilestone = async (projectId, milestoneId, milestoneData) => {
   try {
-    const response = await axios.put(
-      `${API_URL}/${projectId}/milestones/${milestoneId}`,
-      milestoneData,
-      {
-        headers: getAuthHeader()
-      }
+    const response = await api.put(
+      `/projects/${projectId}/milestones/${milestoneId}`,
+      milestoneData
     );
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to update milestone');
-  }
-};
-export const uploadProjectDocument = async (projectId, formData) => {
-  try {
-    const response = await axios.post(
-      `${API_URL}/${projectId}/documents`,
-      formData,
-      {
-        headers: {
-          ...getAuthHeader(),
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to upload document');
   }
 };
