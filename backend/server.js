@@ -1,44 +1,21 @@
-require('dotenv').config();
+// Import express
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const projectRoutes = require('./routes/Project/projectRoutes');
-const clientRoutes = require('./routes/Client/clientRoutes');
-const userRoutes = require('./routes/User/userRoutes');
-const { authenticate } = require('./middleware/auth');
 
+// Create an express app
 const app = express();
 
-// Middleware
-app.use(cors());
+// Set a port number
+const PORT = process.env.PORT || 3000;
+
+// Middleware (optional) — parse JSON requests
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,       // Recommended for unique indexes
-  useFindAndModify: false     // For Mongoose deprecation warnings
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err));
-
-// Routes
+// Basic route
 app.get('/', (req, res) => {
-  res.send('Project Management API is running...');
+  res.send('Hello, world!');
 });
 
-
-// Protected routes
-app.use('/api/projects', authenticate, projectRoutes);
-app.use('/api/clients', authenticate, clientRoutes);
-app.use('/api/users', authenticate, userRoutes);
-
-
-
-// Start server
-const PORT = process.env.PORT || 5000;
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
