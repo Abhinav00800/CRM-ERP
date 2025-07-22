@@ -8,6 +8,7 @@ import StaffDashboard from './pages/StaffManagment';
 import ProjectManagerDashboard from './pages/LeadManagment';
 import ClientRequestPage from './pages/ClientManagment';
 import AdminDashboard from './pages/AdminManagment';
+import ClientDashboard from './pages/client-dashboard/ClientDashboard';
 
 // Temporary placeholder components for other dashboards
 const ProjectManager = () => <h1>Project Manager Dashboard</h1>;
