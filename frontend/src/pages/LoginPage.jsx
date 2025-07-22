@@ -45,7 +45,6 @@ export default function LoginPage() {
   };
 
   const validateForm = () => {
-    if (!role) return "Please select a role";
     if (!username.trim()) return "Username is required";
     if (!password) return "Password is required";
     return null;
@@ -57,7 +56,6 @@ export default function LoginPage() {
     const validationError = validateForm();
     if (validationError) {
       setError(validationError);
-      setTouchedFields({ role: true, username: true, password: true });
       return;
     }
 
@@ -69,7 +67,7 @@ export default function LoginPage() {
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       const user = validUsers.find(
-        (u) => u.role === role && u.username === username && u.password === password
+        (u) => u.username === username && u.password === password
       );
 
       if (user) {
@@ -77,7 +75,7 @@ export default function LoginPage() {
         // In a real app: navigate(`/${user.role}`);
 
         // Reset form after successful login
-        setRole("");
+        // setRole("");
         setUsername("");
         setPassword("");
         setTouchedFields({});
@@ -128,7 +126,7 @@ export default function LoginPage() {
 
             <div className="space-y-6">
               {/* Role Selection */}
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Select Role
                 </label>
@@ -160,7 +158,7 @@ export default function LoginPage() {
                     {getFieldError('role')}
                   </p>
                 )}
-              </div>
+              </div> */}
 
               {/* Username Field */}
               <div>
@@ -262,7 +260,7 @@ export default function LoginPage() {
             </div>
 
             {/* Sign Up Link */}
-            <div className="mt-8 text-center">
+            {/* <div className="mt-8 text-center">
               <p className="text-gray-600">
                 New to our platform?{' '}
                 <Link
@@ -272,7 +270,7 @@ export default function LoginPage() {
                   Sign up
                 </Link>
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -4,6 +4,10 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ProjectManagement from './pages/ProjectManagement';
+import StaffDashboard from './pages/StaffManagment';
+import ProjectManagerDashboard from './pages/LeadManagment';
+import ClientRequestPage from './pages/ClientManagment';
+import AdminDashboard from './pages/AdminManagment';
 
 // Temporary placeholder components for role dashboards
 const ProjectManager = () => <h1>Project Manager Dashboard</h1>;
@@ -32,6 +36,10 @@ function App() {
         <Route path='/sales' element={<Sales />} />
         <Route path='/finance' element={<Finance />} />
         <Route path='/projectmanagment' element={<ProjectManagement/>} />
+        <Route path='/staffmanagment' element={<StaffDashboard/>} />
+        <Route path='/leadmanagment' element={<ProjectManagerDashboard/>} />
+        <Route path='/clientmanagment' element={<ClientRequestPage/>} />
+        <Route path='/adminmanagment' element={<AdminDashboard/>} />
         <Route path='/projectmanagement/:id' element={<ProjectManagement />} />
       </Routes>
     </BrowserRouter>
