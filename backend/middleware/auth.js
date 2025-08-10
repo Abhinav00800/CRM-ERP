@@ -23,7 +23,8 @@ const authenticateToken = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       
       // Get user from token
-      const user = await User.findById(decoded.id);
+      console.log(decoded.userId)
+      const user = await User.findById(decoded.userId);
       
       if (!user) {
         return res.status(401).json({
@@ -32,14 +33,15 @@ const authenticateToken = async (req, res, next) => {
         });
       }
 
-      if (!user.isActive) {
-        return res.status(401).json({
-          success: false,
-          message: 'User account is deactivated'
-        });
-      }
+      // if (!user.isActive) {
+      //   return res.status(401).json({
+      //     success: false,
+      //     message: 'User account is deactivated'
+      //   });
+      // }
 
       req.user = user;
+      // console.log("auth passed")
       next();
     } catch (error) {
       return res.status(401).json({
