@@ -3,24 +3,8 @@ import { Eye, EyeOff, User, Lock, UserCheck, AlertCircle } from "lucide-react";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-
-const validUsers = [
-  { role: "project-manager", username: "pm", password: "123", displayName: "Project Manager" },
-  { role: "hr", username: "hr", password: "123", displayName: "HR" },
-  { role: "admin", username: "admin", password: "123", displayName: "Admin" },
-  { role: "client", username: "client", password: "123", displayName: "Client" },
-  { role: "sales", username: "sales", password: "123", displayName: "Sales" },
-  { role: "finance", username: "finance", password: "123", displayName: "Finance" },
-];
-
-const roleOptions = [
-  { value: "project-manager", label: "Project Manager", icon: "👔" },
-  { value: "hr", label: "HR", icon: "👥" },
-  { value: "admin", label: "Admin", icon: "⚙️" },
-  { value: "client", label: "Client", icon: "🤝" },
-  { value: "sales", label: "Sales", icon: "💼" },
-  { value: "finance", label: "Finance", icon: "💰" },
-];
+import { ApiConnector } from "../operation/ApiConnector";
+import { endPoints } from "../operation/Api";
 
 export default function LoginPage() {
   const [role, setRole] = useState("");
@@ -30,6 +14,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [touchedFields, setTouchedFields] = useState({});
+
+  const navigate = useNavigate()
 
   const handleInputChange = (field, value) => {
     if (field === 'role') setRole(value);
@@ -64,24 +50,17 @@ export default function LoginPage() {
 
     // Simulate API call delay
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      const user = validUsers.find(
-        (u) => u.username === username && u.password === password
-      );
-
-      if (user) {
-        alert(`Welcome ${user.displayName}! Redirecting to /${user.role} dashboard...`);
-        // In a real app: navigate(`/${user.role}`);
-
-        // Reset form after successful login
-        // setRole("");
-        setUsername("");
-        setPassword("");
-        setTouchedFields({});
-      } else {
-        setError("Invalid role, username or password. Please check your credentials and try again.");
-      }
+      const response = await ApiConnector({
+        method : "post",
+        url : endPoints.SIGN_IN,
+        body : {
+          email : username,
+          password : password
+        }
+      })
+      localStorage.setItem("token",response.data.token)
+      setIsLoading(false);
+      navigate(`/${response.data.user.role}`)
     } catch (err) {
       setError("Login failed. Please try again.");
     } finally {
