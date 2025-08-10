@@ -5,13 +5,16 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 // Import routes
-const authRoutes = require('./routes/auth');
+// const authRoutes = require('./routes/authRouter');
 const clientRoutes = require('./routes/clients');
-const projectRoutes = require('./routes/projects');
+// const projectRoutes = require('./routes/projects');
 const financeRoutes = require('./routes/finance');
 const employeeRoutes = require('./routes/employees');
 const reportRoutes = require('./routes/reports');
 const notificationRoutes = require('./routes/notifications');
+const projectRouter = require('./routes/projects');
+const authRouter = require('./routes/auth');
+const { authenticateToken } = require('./middleware/auth');
 
 // Load environment variables
 dotenv.config();
@@ -29,6 +32,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+
 // Database connection
 mongoose.connect(process.env.MONGODB_URI, {
   // Removed deprecated options that are no longer needed in newer MongoDB driver versions
@@ -37,10 +41,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/clients', clientRoutes);
-app.use('/api/projects', projectRoutes);
-app.use('/api/finance', financeRoutes);
+app.use('/api/auth', authRouter); //done
+app.use('/api/clients', clientRoutes); 
+app.use('/api/project', authenticateToken, projectRouter); // done
+app.use("/api/finance",financeRoutes);// done
 app.use('/api/employees', employeeRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/notifications', notificationRoutes);

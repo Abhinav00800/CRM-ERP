@@ -9,11 +9,9 @@ import ProjectManagerDashboard from './pages/LeadManagment';
 import ClientRequestPage from './pages/ClientManagment';
 import AdminDashboard from './pages/AdminManagment';
 import ClientDashboard from './pages/client-dashboard/ClientDashboard';
+import { ProjectProvider } from './context/ProjectContext';
 
 // Temporary placeholder components for other dashboards
-const ProjectManager = () => <h1>Project Manager Dashboard</h1>;
-const HR = () => <h1>HR Dashboard</h1>;
-const Admin = () => <h1>Admin Dashboard</h1>;
 const Sales = () => <h1>Sales Dashboard</h1>;
 const Finance = () => <h1>Finance Dashboard</h1>;
 
@@ -29,10 +27,10 @@ function App() {
         <Route path='/signup' element={<SignupPage />} />
 
         {/* Role-based dashboards */}
-        <Route path='/project-manager' element={<ProjectManager />} />
-        <Route path='/hr' element={<HR />} />
-        <Route path='/admin' element={<Admin />} />
-        <Route path='/client' element={<ClientDashboard />} />
+        <Route path='/project-manager' element={<ProjectManagerDashboard />} />
+        {/* <Route path='/hr' element={<HR />} /> */}
+        <Route path='/admin' element={<AdminDashboard />} />
+        <Route path='/client' element={<ProjectProvider> <ClientDashboard /> </ProjectProvider>} />
         <Route path='/sales' element={<Sales />} />
         <Route path='/finance' element={<Finance />} />
         <Route path='/projectmanagment' element={<ProjectManagement/>} />
