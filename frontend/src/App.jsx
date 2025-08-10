@@ -24,7 +24,7 @@ function App() {
 
         {/* Login & Signup routes */}
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignupPage />} />
+        {/* <Route path='/signup' element={<SignupPage />} /> */}
 
         {/* Role-based dashboards */}
         <Route path='/project-manager' element={<ProjectManagerDashboard />} />
@@ -35,7 +35,7 @@ function App() {
         <Route path='/finance' element={<Finance />} />
         <Route path='/projectmanagment' element={<ProjectManagement/>} />
         <Route path='/staffmanagment' element={<StaffDashboard/>} />
-        <Route path='/leadmanagment' element={<ProjectManagerDashboard/>} />
+        <Route path='/teamlead' element={<ProjectManagerDashboard/>} />
         <Route path='/clientmanagment' element={<ClientRequestPage/>} />
         <Route path='/adminmanagment' element={<AdminDashboard/>} />
         <Route path='/projectmanagement/:id' element={<ProjectManagement />} />

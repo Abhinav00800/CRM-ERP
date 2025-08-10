@@ -14,7 +14,7 @@ const ClientDashboard = () => {
         <ProjectOverview />
         <PaymentSummary />
       </div>
-      <ActionButtons />
+      {/* <ActionButtons /> */}
       <ActivityLog />
     </div>
   );

@@ -21,6 +21,10 @@ const projectSchema = new mongoose.Schema({
       ref: 'Developer'
     }
   ],
+  teamId: {  // <-- Add this
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team'
+  },
   description: {
     type: String
   },
