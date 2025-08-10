@@ -8,11 +8,9 @@ const Team = require('./models/Team');
 const Project = require('./models/Project');
 const PaymentSummary = require('./models/PaymentSummary');
 
-// ... previous imports and connection logic ...
-
 async function seed() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/crm_erp_db', {
+    await mongoose.connect('mongodb+srv://kavy:5GjhXE1qwcmCnH1v@cluster0.gn4yhgi.mongodb.net/crm_erp_db?retryWrites=true&w=majority&appName=Cluster0', {
       useNewUrlParser: true,
     });
 
@@ -26,11 +24,12 @@ async function seed() {
     await Project.deleteMany({});
     await PaymentSummary.deleteMany({});
 
-    // 1. Create Users
+    // 1. Create Users (with contact added)
     const adminUser = await User.create({
       name: 'Super Admin',
       email: 'admin@example.com',
       role: 'admin',
+      phone: '+91 1111111111',           // <-- Added phone here
       password: '$2b$10$HpJZZR9kw8eZa3fjQrqM1u0exUSKQnkJxVy/S2VZXXQxwKV6xeyeO',
     });
 
@@ -38,6 +37,7 @@ async function seed() {
       name: 'Alice TeamLead',
       email: 'alice.teamlead@example.com',
       role: 'teamlead',
+      phone: '+91 2222222222',           // <-- Added phone here
       password: '$2b$10$HpJZZR9kw8eZa3fjQrqM1u0exUSKQnkJxVy/S2VZXXQxwKV6xeyeO',
     });
 
@@ -45,6 +45,7 @@ async function seed() {
       name: 'Bob Client',
       email: 'bob.client@example.com',
       role: 'client',
+      phone: '+91 3333333333',           // <-- Added phone here
       password: '$2b$10$HpJZZR9kw8eZa3fjQrqM1u0exUSKQnkJxVy/S2VZXXQxwKV6xeyeO',
     });
 
@@ -52,6 +53,7 @@ async function seed() {
       name: 'Charlie Developer',
       email: 'charlie.dev@example.com',
       role: 'developer',
+      phone: '+91 4444444444',           // <-- Added phone here
       password: '$2b$10$HpJZZR9kw8eZa3fjQrqM1u0exUSKQnkJxVy/S2VZXXQxwKV6xeyeO',
     });
 

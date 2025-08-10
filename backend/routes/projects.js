@@ -4,6 +4,7 @@ const Project = require("../models/Project");
 const Client = require("../models/Client");
 const User = require("../models/User");
 const teamLead = require("../models/TeamLead")
+const Developer = require("../models/Developer")
 
 // CREATE Project
 projectRouter.post("/", async (req, res) => {
@@ -39,16 +40,27 @@ projectRouter.post("/", async (req, res) => {
 projectRouter.get("/", async (req, res) => {
   try {
     const projects = await Project.find()
-      .populate("client", "companyName")
-      .populate("teamLead", "name email")
-      .populate("team", "name")
-      .populate("access", "name email");
+      .populate("clientId", "companyName")
+      .populate({
+        path: "teamLeadId",
+        populate: { path: "user", select: "name email" }
+      })
+      .populate({
+        path: "teamId",
+        populate: [
+          { path: "teamLead", select: "name email" },
+          { path: "members", select: "name email" }
+        ]
+      })
+      .populate("developers", "name email")
+      .populate("paymentSummary");
 
-    res.json(projects);
+    res.json({ projects });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // GET projects for the logged-in client
 projectRouter.get("/client", async (req, res) => {

@@ -1,14 +1,16 @@
-
+// Express route example
 const express = require('express');
-const router = express.Router();
+const clientRouter = express.Router();
+const Client = require('../models/Client');
 
-// Simple test route
-router.get('/', (req, res) => {
-  res.json({ 
-    success: true, 
-    message: 'Clients API working',
-    data: { clients: [] }
-  });
+clientRouter.get('/', async (req, res) => {
+  try {
+    const clients = await Client.find()
+      .populate('user', 'name email contact'); // populate user info if needed
+    res.json(clients);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-module.exports = router;
+module.exports = clientRouter;

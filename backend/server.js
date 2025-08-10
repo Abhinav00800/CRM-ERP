@@ -15,6 +15,8 @@ const notificationRoutes = require('./routes/notifications');
 const projectRouter = require('./routes/projects');
 const authRouter = require('./routes/auth');
 const { authenticateToken } = require('./middleware/auth');
+const UserRouter = require('./routes/user');
+const clientRouter = require('./routes/clients')
 
 // Load environment variables
 dotenv.config();
@@ -42,9 +44,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Routes
 app.use('/api/auth', authRouter); //done
-app.use('/api/clients', clientRoutes); 
+app.use('/api/client', clientRouter); 
 app.use('/api/project', authenticateToken, projectRouter); // done
 app.use("/api/finance",financeRoutes);// done
+app.use("/api/user",UserRouter); // done
 app.use('/api/employees', employeeRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/notifications', notificationRoutes);
